@@ -196,105 +196,49 @@ void mult(char num1[], char num2[]){
     }
 }
 
-
-void division(char num1[], char num2[]) {
-    int i, j, flag = 0;
-    int dividend = 0, res;
-    struct node *head1 = NULL, *head2 = NULL, *temp1, *resH = NULL, *temp2;
-    struct node *tail1 = head1, *tail2 = head2, *resT = resH;
-
-    // Create linked lists for num1 and num2
-    for (i = 0; num1[i] != '\0'; i++) {
-        new_node(&head1, &tail1, num1[i] - '0');
-    }
-    for (j = 0; num2[j] != '\0'; j++) {
-        new_node(&head2, &tail2, num2[j] - '0');
-    }
-
-    // Print input numbers
-    temp1 = head1;
-    printf("First number: ");
-    while (temp1) {
+void divide(char num1[], char num2[]) {
+    int i, j, divi = 0, divit = 0, res = 0;
+    int n1 = atoi(num1),n2,ress;
+    n2 = atoi(num2);
+    struct node* head1 = NULL, *head2 = NULL, *temp1, *resH = NULL, *temp2;
+    struct node* tail1 = head1, *tail2 = head2, *resT = resH;
+    temp1=head1;
+    printf("First number:");
+    while(temp1){
         printf("%d", temp1->data);
-        temp1 = temp1->next;
-    }
+        temp1=temp1->next;
+    }printf("\nSecond number:");
     temp1 = head2;
-    printf("\nSecond number: ");
-    while (temp1) {
+    while(temp1){
         printf("%d", temp1->data);
-        temp1 = temp1->next;
-    }
-
-    // Check if the dividend is smaller than the divisor
-    temp1 = head1;
-    temp2 = head2;
-    while (temp1 && temp2) {
-        if (temp1->data < temp2->data) {
-            flag = 1;
-            break;
-        } else if (temp1->data > temp2->data) {
-            flag = 0;
-            break;
-        }
-        temp1 = temp1->next;
-        temp2 = temp2->next;
-    }
-
-    if (flag) {
-        printf("Dividend number must be bigger than the divisor!\n");
+        temp1=temp1->next;
+    }ress = n1/n2;
+    for(i=0;num1[i]!='\0';i++){
+        new_node(&head1, &tail1, num1[i] - '0');
+    }for(j = 0; num2[j] != '\0'; j++){
+        new_node(&head2, &tail2, num2[j] - '0');
+    }if(length(head1) < length(head2)){
+        printf("Dividend Number Must Be Bigger Than Divisor!\n");
         return;
-    }
-
-    // Initialize the result quotient
-    int len1 = length(head2);
-    while (len1) {
-        new_node(&resH, &resT, 0);
-        len1--;
-    }
-    printf("ok");
-    // Perform long division
-    temp1 = head1;
-    temp2 = resH;
-    int len_dividend = 0;
-    int divi = 0;
-
-    while (temp1) {
-        dividend = dividend * 10 + temp1->data;
-        len_dividend++;
-
-        while (dividend >= divi || len_dividend < length(head2)) {
-            // Calculate the quotient for this step
-            temp2->data = dividend / divi;
-            res = dividend % divi;
-
-            // Shift left the remainder
-            dividend = res;
-            len_dividend++;
-            temp1 = temp1->next;
-            if (!temp1)
+    }while (1) {
+        int quotient = 0;
+        while (divi < 1) {
+            if (i >= length(head1)) {
                 break;
-            divi = divi * 10 + temp1->data;
-        }
-
-        temp2 = temp2->next;
-    }
-
-    // Print the result quotient
-    temp1 = resH;
-    printf("\nQuotient = ");
-    while (temp1) {
-        printf("%d", temp1->data);
-        temp1 = temp1->next;
-    }
-
-    // Print the remainder
-    printf("\nRemainder = %d\n", res);
+            }divi = divi * 10 + head1->data;
+            head1 = head1->next;
+            i++;
+        }if(i >= length(head1)){
+            break;
+        }while(divit < divi){
+            divit = divit * 10 + head2->data;
+            head2 = head2->next;
+        }while(divit >= divi){
+            divit -= divi;
+            quotient++;
+        }new_node(&resH, &resT, quotient);
+    }printf("answer = %d ",ress);
 }
-
-
-
-
-
 
 
 #endif
